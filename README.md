@@ -1,3 +1,5 @@
+# THIS IS AN INTERNAL REPOSITORY FOR INTERNAL USE ONLY
+# FOR THE OFFICIAL ECL REPOSITORY, GO TO https://github.com/ec-europa/europa-component-library 
 # ECL v3 - Europa Component Library
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
