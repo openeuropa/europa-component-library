@@ -16,6 +16,7 @@
 {% set _items = items|default([]) %}
 {% set _toggle = toggle|default({}) %}
 {% set _description = description|default('') %}
+{% set _variant = variant|default('default') %}
 
 {% if _items is not empty %}
   <div
@@ -36,7 +37,9 @@
 
     <ul class="ecl-file__translation-list">
       {% for _item in _items %}
-        {% include '@ecl/file/file-translation-item.html.twig' with _item only %}
+        {% include '@ecl/file/file-translation-item.html.twig' with _item|merge({
+          variant: _variant
+        }) only %}
       {% endfor %}
       <li class="ecl-file__translation-item ecl-file__translation-description">
         {{- _description -}}
