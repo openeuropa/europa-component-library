@@ -101,7 +101,7 @@
               path: _sections.logo.path,
               label: _label,
               type: 'standalone',
-              aria_label: _sections.logo.title
+              aria_label: _sections.logo.aria_label
             },
             extra_classes: 'ecl-site-footer__logo-link'
           } only %}
@@ -149,6 +149,7 @@
               {% endif %}
               {% include '@ecl/link/link.html.twig' with _item|merge({
                 link: _item.link|default({})|merge({ type: 'standalone' }),
+                icon: _item.icon|default({})|merge({ size: 'xs' }),
                 extra_classes: 'ecl-site-footer__link',
               }) only %}
               {% if _item.content_after is defined and _item.content_after is not empty %}
