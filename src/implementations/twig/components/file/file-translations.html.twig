@@ -35,9 +35,12 @@
     }) only %}
 
     <ul class="ecl-file__translation-list">
-    {% for _item in _items %}
-      {% include '@ecl/file/file-translation-item.html.twig' with _item only %}
-    {% endfor %}
+      {% for _item in _items %}
+        {% include '@ecl/file/file-translation-item.html.twig' with _item only %}
+      {% endfor %}
+      <li class="ecl-file__translation-item ecl-file__translation-description">
+        {{- _description -}}
+      </li>
     </ul>
   </div>
 {% endif %}
