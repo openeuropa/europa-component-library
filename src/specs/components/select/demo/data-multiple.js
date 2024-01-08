@@ -1,5 +1,7 @@
 module.exports = {
+  id: 'select-multiple',
   label: 'Select a country',
+  name: 'country',
   helper_text: 'This is the helper text.',
   invalid_text: 'Error message',
   invalid_icon: {
@@ -9,6 +11,7 @@ module.exports = {
   },
   required_text: '*',
   optional_text: ' (optional)',
+  icon_path: '/icons.svg',
   required: true,
   input: {
     input_type: 'select',
