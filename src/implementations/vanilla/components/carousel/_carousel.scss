@@ -13,6 +13,8 @@ $carousel: null !default;
 
 .ecl-carousel {
   border-bottom: map.get($carousel, 'separator');
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   position: relative;
 
@@ -35,6 +37,7 @@ $carousel: null !default;
   background-color: map.get($carousel, 'controls-background');
   box-shadow: inset 0 -4px 12px -9px
     rgba(map.get($theme, 'color', 'black'), 0.6);
+  order: 1;
   width: calc(100% - var(--s-xl));
 }
 
@@ -51,7 +54,7 @@ $carousel: null !default;
   position: relative;
 
   &::before {
-    background: map.get($theme, 'color', 'white-100');
+    background: map.get($theme, 'color', 'white');
     content: '';
     display: block;
     height: 100%;
@@ -68,6 +71,7 @@ $carousel: null !default;
 
 .ecl-carousel__controls {
   background-color: map.get($carousel, 'controls-background');
+  order: 2;
   padding: map.get($carousel, 'controls-padding');
 
   .ecl-container {
@@ -171,13 +175,13 @@ $carousel: null !default;
 
   .ecl-carousel__prev,
   .ecl-carousel__next {
-    background-color: map.get($theme, 'color', 'white-100');
+    background-color: map.get($theme, 'color', 'white');
     color: var(--c-d);
     display: block;
     position: absolute;
     top: calc(50% - 22px);
     transform: translateY(-50%);
-    z-index: 1;
+    z-index: 2;
 
     &:hover {
       background-color: map.get($carousel, 'prev-next-hover-background');
