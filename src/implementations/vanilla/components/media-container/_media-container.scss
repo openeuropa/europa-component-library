@@ -46,7 +46,7 @@ $media-container: null !default;
 .ecl-media-container__caption {
   color: map.get($media-container, 'caption-color');
   font: map.get($media-container, 'caption-font');
-  max-width: map.get($media-container, 'caption-max-width');
+  max-width: var(--max-w);
   padding: map.get($media-container, 'caption-padding');
   position: relative;
 }
@@ -91,7 +91,7 @@ $media-container: null !default;
 @if map-has-key($media-container, 'caption-before') {
   .ecl-media-container__caption {
     &::before {
-      background-color: map.get($theme, 'color', 'yellow-100');
+      background-color: var(--c-s);
       border-bottom-left-radius: 2px;
       border-bottom-right-radius: 2px;
       content: '';

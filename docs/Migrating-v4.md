@@ -71,9 +71,9 @@ Spacing scale has been enriched for EC, now going from 2XS to 6XL (previously 2X
 
 ### Accordion
 
-- The icon size is now different in the two systems, the twig template sets it by default to `xs` which is the value for EC, it needs to be
-  overridden by the data provided when working with the EU theme to `m`.
+- The icon size is now `s` for both EC and EU
 - A selector `ecl-accordion__item--active` is now added via our vanilla js to mark the latest item the user interacted with.
+- Label associated to the accordion icon is no longer displayed. This mean that twig parameters `label_expanded` and `label_collapsed`, and associated `data-ecl-label-expanded` and `data-ecl-label-collapsed` are no longer used. Javascript has also been updated to remove corresponding code
 
 ### Banner
 
@@ -86,6 +86,7 @@ Spacing scale has been enriched for EC, now going from 2XS to 6XL (previously 2X
 - Font size of the separator icon is now `fluid` for both EC and EU, so it will automatically adjust based on the font size
 - Icon rotation is now handled in CSS as it depends on the context, so no need to use icon variant anymore for that (`ecl-icon--rotate-90`)
 - All EC breadcrumb now share the same display; there is no longer a specific variant for EC Core (previously called `negative`). Corresponding parameter and css classes have been removed
+- Rename twig parameter `icon_file_path` to `icon_path`, to be consistent with other components
 
 ### Button
 
@@ -96,17 +97,45 @@ Spacing scale has been enriched for EC, now going from 2XS to 6XL (previously 2X
   Note: even with this variant, it is still mandatory to provide a label for the button, for screen readers. It is just not displayed.
 - It is now possible to pass multiple icons to the button, the same way it happens for the link, an array of objects of type icon will be rendered as a list of icons one after the other.
 
+### Card
+
+- New twig parameter `labels_aria`, to add an aria-label to the primary meta area
+
 ### Carousel
 
 - Buttons for carousel pagination are now placed differently, and use Button `ghost`
+- New twig parameter `sr_description`, to provide a human friendly description of the carousel. It is used mostly by screen readers
+- New twig parameters `sr_role` and `sr_slide_role`, to provide localized role for the carousel and slides tags. It is used mostly by screen readers
+
+### Category filter
+
+- New twig parameter `label`, to provide a readable label for the category filter (mostly for screen readers)
+- New twig parameter `id`, to provide a unique id for the category filter (used for accessibility). If not provided, a random id is generated
+- Markup and javascript have been updated to improve accessibilty: use of `button` when there are children and set `aria-expanded` to the button itself
 
 ### Checkbox
 
 - In the single checkbox use case, when required, a mark is expected also in the checkbox label, this can be provided by passing a `required_text` prop in the checkbox item object.
+- Remove parameters `label_id` and `helper_id`, handled in form group
+- New twig parameter `label_aria_required`. It is used to set a readable text when a single checkbox is required (and not only a '\*'). If there are multiple checkboxes, it is handled in the form group
+
+### Content block
+
+- New twig parameter `labels_aria`, to add an aria-label to the primary meta area
 
 ### Content item
 
 - New variant `ecl-content-item__picture--top` added to put the image on top. It requires to also add class `ecl-content-item--stack` to the root element of the component
+- New twig parameter `labels_aria`, to add an aria-label to the primary meta area
+
+### Datepicker
+
+- Rename twig parameter `icons_path` to `icon_path`, to be consistent with other components
+
+### Description list
+
+- Markup has been updated to put links and taxonomies in dedicated `<ul>` lists
+- Links in the taxonomies are no longer using variant `standalone`
 
 ### Expandable
 
@@ -119,11 +148,15 @@ Spacing scale has been enriched for EC, now going from 2XS to 6XL (previously 2X
 ### Featured item
 
 - Variant `extended` has been renamed `highlight` to be consistent with other components
+- New parameters `footer_description`, `footer_link` and `footer_picture` to handle a new section below the featured item
+- Markup updated for the title, with a new `<span>`
 
 ### File
 
 - File title can now be also a link, the intended usage of this is limited to the case when the href is set to a webpage, please avoid duplicating
   this link and the one in the download button, they should be used alternatively.
+- The component is now going to generate ids for many elements, to improve accessibility, they are all based on the main id assigned to the component wrapper, `id` is added as a parameter and can be used to customise the generated ids.
+- Download links are now going to have an `aria-labelledby` attribute with a value generated programmatically, therefore the `aria-label` arttribute should be omitted for those links.
 
 ### Form group
 
@@ -137,7 +170,9 @@ EX: `{% include '@ecl/form-group/form-group.html.twig' with {
   invalid_text: 'this is an invalid text', 
   required_text: '*', 
   required: true,
-  optional_text: 'this is an optional text', 
+  optional_text: '(optional)',
+  label_aria_required: 'required',
+  label_aria_optional: 'optional',
   input: {
     input_type: file,
     multiple: false, 
@@ -147,8 +182,8 @@ EX: `{% include '@ecl/form-group/form-group.html.twig' with {
 
 - It is also possible to include directly the form elements templates to only render the input field, but in that case it's responsibility of the
   implementation to ensure that the accessibility is not compromised.
-- The vanilla package defining the styles for the form group elements is now named `@ecl/vanilla-component-form-group` and the scss contained in it are `_form-group.scss`
-  and `form-group-print.scss`
+- The vanilla package defining the styles for the form group elements is now named `@ecl/vanilla-component-form-group` and the scss contained in it are `_form-group.scss` and `form-group-print.scss`
+- The form group template take care of accessibility for everything surrounding the form input (label, helper text, ...). Depending on the form input, the way it is handled may vary (using specific html tags or aria attributes)
 
 ### Inpage navigation
 
@@ -204,6 +239,7 @@ EX: `{% include '@ecl/form-group/form-group.html.twig' with {
 ### Navigation list
 
 - `border` parameter has been moved to the parent template and then passed to the single items template, so it is set at once for all the items and it's now by default set to `true`.
+- `variant` parameter has been added, it can be set to `illustration` to get the image on the right in the tear drop container.
 
 ### Page header
 
@@ -214,6 +250,10 @@ EX: `{% include '@ecl/form-group/form-group.html.twig' with {
 
 - A new `type` has been introduced, `truncation` can be used to add a placeholder with no link to represent some skipped items.
 - In EC the previous and next links are icon only links, in order to get the expected look and feel set the `item.link.link.hide_label` parameter to `true`.
+
+### Radio
+
+- Remove parameters `helper_id` and `invalid_icon`, handled in form group
 
 ### Rating field
 
@@ -244,6 +284,7 @@ EX: `{% include '@ecl/form-group/form-group.html.twig' with {
 ### Site header
 
 - Twig parameter `message` has been renamed to `notification`
+- Twig parameter `icon_file_path` has been renamed to `icon_path`, to be consistent with other components
 - CSS class `ecl-site-header__message` has been renamed to `ecl-site-header__notification`
 - Icon for the close button is now different between EC and EU: `close` for EC, `close-filled` for EU. Icon size is also different (`m` for EC, `s` for EU)
 - Twig parameter `close_label` has been removed and replaced by a new one: `close`. It expect an ECL Button
@@ -285,6 +326,9 @@ EX: `{% include '@ecl/form-group/form-group.html.twig' with {
 ### Tag
 
 - Icon used in removable tag is now `close-outline`
+- Renamed twig paramter `default_icon_path` to `icon_path`, to be consistent with other components
+- Tags now wrap on several lines by default. New twig parameter `nowrap` added to force display of the tag on one line.
+- Added possibilty to handle set of tags. Twig template and corresponding css have been added.
 
 ## Custom theme
 
